@@ -1,5 +1,6 @@
 import {DragEvent, useEffect, useState} from "react"
 import {
+  IoAddCircleSharp,
   IoCheckmarkCircleOutline,
   IoEllipsisHorizontalOutline,
 } from "react-icons/io5";
@@ -7,6 +8,7 @@ import { TaksStatus, Task } from "../../Interfaces";
 import { SimpleTask } from "./SimpleTask";
 import classNames from "classnames";
 import { useTasksStore } from "../../store/task/task.store";
+import Swal from "sweetalert2";
 
 interface Props {
   title: string;
@@ -16,7 +18,8 @@ interface Props {
 
 export const JiraTasks = ({ title, tasks, value }: Props) => {
   const dragingTaksId = useTasksStore((state) => state.dragingTaksId);
-  const changeTaksStatus = useTasksStore((state) => state.changeTaksStatus);
+  const addTask = useTasksStore((state) => state.addTask);
+  const onTaskDrop = useTasksStore((state) => state.onTaskDrop);
   const [onDragOver, setOnDragOver] = useState(false);
 
   const handleonDragOver = (e: DragEvent<HTMLDivElement>) => {
@@ -30,8 +33,32 @@ export const JiraTasks = ({ title, tasks, value }: Props) => {
   const handleOnDrop = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault()
     setOnDragOver(false)
-    changeTaksStatus(dragingTaksId!,value)
+    onTaskDrop(value)
   };
+
+  const handleaddTask = async()=>{
+    const resp = await Swal.fire({
+      title: "Ingrese el nombre del nuevo titulo",
+      input: "text",
+      inputAttributes: {
+        autocapitalize: "off"
+      },
+      showCancelButton: true,
+      confirmButtonText: "Look up",
+      showLoaderOnConfirm: true,
+      // allowOutsideClick: () => !Swal.isLoading(),
+      inputValidator:(value)=>{
+        if(!value){
+          return "Debe ingresar un titulo"
+        }
+      }
+    })
+    console.log(resp);
+    if(resp.isConfirmed) {
+      addTask(resp.value,value)
+    }    
+  }
+
 
   
 
@@ -60,8 +87,11 @@ export const JiraTasks = ({ title, tasks, value }: Props) => {
           <h4 className="ml-4 text-xl font-bold text-navy-700">{title}</h4>
         </div>
 
-        <button>
-          <IoEllipsisHorizontalOutline />
+        <button 
+        onClick={handleaddTask}
+        
+        >
+          <IoAddCircleSharp  />
         </button>
       </div>
 
