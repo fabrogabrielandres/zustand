@@ -1,9 +1,12 @@
 import { IoAccessibilityOutline, IoHeartOutline, IoListOutline, IoLockClosedOutline, IoPawOutline } from 'react-icons/io5';
 import { WhiteCard } from '../../components';
 import { useBearStore } from '../../store/bears/bears.Store';
+import { useTasksStore } from '../../store/task/task.store';
 
 export const Dashboard = () => {
   const totalBears = useBearStore((state)=>state.computed.totalBears)
+  const tasks = useTasksStore((state)=>state.tasks)
+  const totalTaks = (Object.values(tasks).length)
   return (
     <>
       <h1>Dashboard</h1>
@@ -30,7 +33,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoListOutline size={ 50 } className="text-indigo-600" />
           <h2>Tareas</h2>
-          <p>Información</p>
+          <p>{totalTaks}</p>
         </WhiteCard>
 
 
@@ -44,7 +47,7 @@ export const Dashboard = () => {
         <WhiteCard centered>
           <IoLockClosedOutline size={ 50 } className="text-indigo-600" />
           <h2>Auth</h2>
-          <p>Información</p>
+          <p>Informaciónnnnnnnnnnn</p>
         </WhiteCard>
 
 

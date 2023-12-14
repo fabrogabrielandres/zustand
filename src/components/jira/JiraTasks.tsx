@@ -1,8 +1,8 @@
-import {DragEvent, useEffect, useState} from "react"
+import {DragEvent, useState} from "react"
 import {
   IoAddCircleSharp,
   IoCheckmarkCircleOutline,
-  IoEllipsisHorizontalOutline,
+  
 } from "react-icons/io5";
 import { TaksStatus, Task } from "../../Interfaces";
 import { SimpleTask } from "./SimpleTask";
@@ -26,7 +26,7 @@ export const JiraTasks = ({ title, tasks, value }: Props) => {
     e.preventDefault(),
     setOnDragOver(true)
   };
-  const handleOnDragLeave = (e: DragEvent<HTMLDivElement>) => {
+  const handleOnDragLeave = (_e: DragEvent<HTMLDivElement>) => {
     // e.preventDefault()
     setOnDragOver(false)
   };
