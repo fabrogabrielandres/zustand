@@ -42,9 +42,8 @@ const StoreApi: StateCreator<TaskStore,[["zustand/devtools", never],["zustand/im
   setDragingTaksId: (taskId: string) =>set((_state: TaskStore) => ({ dragingTaksId: taskId}),false,"setDragingTaksId"),
   removeDragingTaksId: () =>set((_state: TaskStore) => ({dragingTaksId: ""}),false,"removeDragingTaksId"),
   changeTaksStatus:(taskId: string,status: TaksStatus)=>{
-      const task =get().tasks[taskId]; 
+      const task ={...get().tasks[taskId]}; 
       task.status=status;
-            
       // set((state)=>({tasks:{...state.tasks,[taskId]:task}}),false,"changeTaksStatus") /* with spread operator  */ 
       // set(produce((state:TaskStore)=>{ state.tasks[taskId]=task})  /* with immmer */)
       set((state:TaskStore)=>{ state.tasks[taskId]=task},false,"changeTaksStatus"  /* with middleware immmer */)
