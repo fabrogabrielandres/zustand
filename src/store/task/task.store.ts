@@ -56,7 +56,6 @@ const StoreApi: StateCreator<TaskStore,[["zustand/devtools", never],["zustand/im
   }    
 })
 export const useTasksStore = create<TaskStore>()(devtools(
-  devtools(
     persist(
       immer(StoreApi),
         {
@@ -65,5 +64,4 @@ export const useTasksStore = create<TaskStore>()(devtools(
           // storage: fireBaseStorage
         }
     )
-  )
   ));

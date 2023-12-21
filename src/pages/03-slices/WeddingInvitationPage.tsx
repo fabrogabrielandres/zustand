@@ -1,8 +1,39 @@
 import { WhiteCard } from '../../components';
+import { useWeddingBoundStore } from '../../store/widding';
 
 
 
 export const WeddingInvitationPage = () => {
+
+  const setFirstName = useWeddingBoundStore((state) => state.setFirstName)
+  const setLastName = useWeddingBoundStore((state) => state.setLastName)
+  const setGuests = useWeddingBoundStore((state) => state.setGuests)
+  const  eventYYYYMMDD = useWeddingBoundStore((state) => state.eventYYYYMMDD())
+  const  eventHHMM = useWeddingBoundStore((state) => state.eventHHMM())
+  const  setEventDate = useWeddingBoundStore((state) => state.setEventDate)
+
+  const handleFirstName = (value:string)=>{{
+    setFirstName(value)}
+  }
+  const handleLastName = (value:string)=> {{
+    setLastName(value)}
+  }
+  
+  const handleGuest = (value:string)=>{
+    let guests = Number(value);
+    if (guests && guests > 0){
+      console.log("value",guests);
+      setGuests(Number(guests))
+    }
+  }
+
+  const handleEventDate = (partialDate : string) => {
+    setEventDate(partialDate)
+  }
+  
+  
+
+
   return (
     <>
       <h1>Invitación de Boda</h1>
@@ -25,6 +56,7 @@ export const WeddingInvitationPage = () => {
                     name="firstName"
                     id="firstName"
                     placeholder="Primer Nombre"
+                   onChange={(event)=>handleFirstName(event.target.value)}
                   />
                 </div>
               </div>
@@ -40,6 +72,7 @@ export const WeddingInvitationPage = () => {
                     name="lastName"
                     id="lastName"
                     placeholder="Apellido"
+                    onChange={(event)=>handleLastName(event.target.value)}
                   />
                 </div>
               </div>
@@ -51,6 +84,7 @@ export const WeddingInvitationPage = () => {
                 ¿Cuántos invitados traerá?
               </label>
               <input
+                onChange={(event)=>handleGuest(event.target.value)}
                 type="number"
                 name="guestNumber"
                 id="guestNumber"
@@ -72,6 +106,8 @@ export const WeddingInvitationPage = () => {
                     type="date"
                     name="eventDate"
                     id="eventDate"
+                    value={eventYYYYMMDD}
+                    onChange={(e)=>handleEventDate(e.target.value)}
                   />
                 </div>
               </div>
@@ -79,14 +115,15 @@ export const WeddingInvitationPage = () => {
                 <div className="mb-5">
                   <label
                     className="mb-3 block text-base font-medium text-[#07074D]"
-                  >
+                    >
                     Hora del evento
                   </label>
                   <input
                     type="time"
                     name="eventTime"
                     id="eventTime"
-                  />
+                    value={eventHHMM}
+                    />
                 </div>
               </div>
             </div>
