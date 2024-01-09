@@ -11,6 +11,8 @@ export const WeddingInvitationPage = () => {
   const  eventYYYYMMDD = useWeddingBoundStore((state) => state.eventYYYYMMDD())
   const  eventHHMM = useWeddingBoundStore((state) => state.eventHHMM())
   const  setEventDate = useWeddingBoundStore((state) => state.setEventDate)
+  const  setEventTime = useWeddingBoundStore((state) => state.setEventTime)
+  const  setConfirm = useWeddingBoundStore((state) => state.setConfirm)
 
   const handleFirstName = (value:string)=>{{
     setFirstName(value)}
@@ -28,7 +30,16 @@ export const WeddingInvitationPage = () => {
   }
 
   const handleEventDate = (partialDate : string) => {
+    console.log(partialDate);
+    
     setEventDate(partialDate)
+  }
+  const handleEventHours = (partialDate : string) => {
+    setEventTime(partialDate)
+  }
+  
+  const handleConfirm = (value : boolean) => {
+    setConfirm(value)
   }
   
   
@@ -109,6 +120,7 @@ export const WeddingInvitationPage = () => {
                     value={eventYYYYMMDD}
                     onChange={(e)=>handleEventDate(e.target.value)}
                   />
+                  <span>{eventYYYYMMDD}</span>
                 </div>
               </div>
               <div className="w-full px-3 sm:w-1/2">
@@ -123,6 +135,7 @@ export const WeddingInvitationPage = () => {
                     name="eventTime"
                     id="eventTime"
                     value={eventHHMM}
+                    onChange={(e)=>handleEventHours(e.target.value)}
                     />
                 </div>
               </div>
@@ -139,10 +152,11 @@ export const WeddingInvitationPage = () => {
                     name="isComing"
                     id="radioButton1"
                     className="h-5 w-5"
-                  />
+                    onChange={()=>handleConfirm(true)}
+                    />
                   <label
                     className="pl-3 text-base font-medium text-[#07074D]"
-                  >
+                    >
                     Si
                   </label>
                 </div>
@@ -152,10 +166,11 @@ export const WeddingInvitationPage = () => {
                     name="isComing"
                     id="radioButton2"
                     className="h-5 w-5"
-                  />
+                    onChange={()=>handleConfirm(false)}
+                    />
                   <label
                     className="pl-3 text-base font-medium text-[#07074D]"
-                  >
+                    >
                     No
                   </label>
                 </div>
